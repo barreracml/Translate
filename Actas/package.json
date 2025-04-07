@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "@google-cloud/translate": "^9.0.1",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "@sendgrid/mail": "^8.1.4",
+    "@stripe/stripe-js": "^6.1.0",
+    "axios": "^1.8.4",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "deepl-node": "^1.17.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "firebase": "^11.3.1",
+    "firebase-admin": "^13.2.0",
+    "node": "^23.9.0",
+    "nodemailer": "^6.10.0",
+    "os": "^0.1.2",
+    "pdf-parse": "^1.1.1",
+    "pdfkit": "^0.16.0",
+    "stripe": "^17.7.0",
+    "uuid": "^11.1.0"
+  },
+  "name": "actas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

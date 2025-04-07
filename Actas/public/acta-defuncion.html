@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Acta de Defunción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #00b3e3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0099b3;
+        }
+
+        .form-group-small {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group-small input {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Formulario para Generar Acta de Defunción</h2>
+        <form id="defuncionForm">
+            <div class="form-group">
+                <label for="nombreDocumento">Nombre del Documento:</label>
+                <input type="text" id="nombreDocumento" placeholder="Acta_Defuncion_Juan_Perez" required>
+            </div>
+            <div class="form-group">
+                <label for="nombreFinado">Nombre del Finado:</label>
+                <input type="text" id="nombreFinado" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaDefuncion">Fecha de Defunción:</label>
+                <input type="date" id="fechaDefuncion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fechaNacimiento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select id="sexo">
+                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lugarNacimiento">Lugar de Nacimiento:</label>
+                <input type="text" id="lugarNacimiento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numeroSS">Número de Seguro Social:</label>
+                <input type="text" id="numeroSS" required>
+            </div>
+
+            <div class="form-group">
+                <label for="estadoCivil">Estado Civil:</label>
+                <input type="text" id="estadoCivil" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombreEsposa">Nombre de la Esposa Sobreviviente:</label>
+                <input type="text" id="nombreEsposa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="domicilio">Domicilio:</label>
+                <input type="text" id="domicilio" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombrePadre">Nombre del Padre:</label>
+                <input type="text" id="nombrePadre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombreMadre">Nombre de la Madre:</label>
+                <input type="text" id="nombreMadre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lugarDefuncion">Lugar de Defunción:</label>
+                <input type="text" id="lugarDefuncion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="informacionRelacion">Información y relación con el Finado:</label>
+                <input type="text" id="informacionRelacion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lugarSepelio">Lugar de Sepelio:</label>
+                <input type="text" id="lugarSepelio" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ubicacionSepelio">Ubicación:</label>
+                <input type="text" id="ubicacionSepelio" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombreFuneraria">Nombre de la Funeraria:</label>
+                <input type="text" id="nombreFuneraria" required>
+            </div>
+
+            <div class="form-group">
+                <label for="direccionFuneraria">Dirección de la Funeraria:</label>
+                <input type="text" id="direccionFuneraria" required>
+            </div>
+
+            <div class="form-group">
+                <label for="firmaCertificado">Firma del Certificado:</label>
+                <input type="text" id="firmaCertificado" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaCertificado">Fecha del Certificado:</label>
+                <input type="date" id="fechaCertificado" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cedula">Cédula:</label>
+                <input type="text" id="cedula" required>
+            </div>
+
+            <div class="form-group">
+                <label for="horaDeceso">Hora del Deceso:</label>
+                <input type="time" id="horaDeceso" required>
+            </div>
+
+            <div class="form-group">
+                <label for="causasMuerte">Causas de la Muerte:</label>
+                <input type="text" id="causasMuerte" required>
+            </div>
+
+            <button type="submit">Generar PDF</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("defuncionForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const datos = {
+                nombreDocumento: document.getElementById("nombreDocumento").value,
+                nombreFinado: document.getElementById("nombreFinado").value,
+                fechaDefuncion: document.getElementById("fechaDefuncion").value,
+                fechaNacimiento: document.getElementById("fechaNacimiento").value,
+                sexo: document.getElementById("sexo").value,
+                edad: document.getElementById("edad").value,
+                lugarNacimiento: document.getElementById("lugarNacimiento").value,
+                numeroSS: document.getElementById("numeroSS").value,
+                estadoCivil: document.getElementById("estadoCivil").value,
+                nombreEsposa: document.getElementById("nombreEsposa").value,
+                domicilio: document.getElementById("domicilio").value,
+                nombrePadre: document.getElementById("nombrePadre").value,
+                nombreMadre: document.getElementById("nombreMadre").value,
+                lugarDefuncion: document.getElementById("lugarDefuncion").value,
+                informacionRelacion: document.getElementById("informacionRelacion").value,
+                direccion: document.getElementById("direccion").value,
+                lugarSepelio: document.getElementById("lugarSepelio").value,
+                ubicacionSepelio: document.getElementById("ubicacionSepelio").value,
+                nombreFuneraria: document.getElementById("nombreFuneraria").value,
+                direccionFuneraria: document.getElementById("direccionFuneraria").value,
+                firmaCertificado: document.getElementById("firmaCertificado").value,
+                fechaCertificado: document.getElementById("fechaCertificado").value,
+                cedula: document.getElementById("cedula").value,
+                horaDeceso: document.getElementById("horaDeceso").value,
+                causasMuerte: document.getElementById("causasMuerte").value
+            };
+
+            const response = await fetch("http://localhost:3000/generardefuncion", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const result = await response.json();
+
+            // Verifica el contenido de la respuesta
+            console.log(result); // Ver qué estás recibiendo
+
+            if (result.success) {
+                alert("PDF generado con éxito");
+
+                // Esperar 2 segundos antes de redirigir
+                setTimeout(function () {
+                    window.location.href = './payment.html'; // Redirige a la página de pago
+                }, 1000);
+            } else {
+                alert(result.message || "Hubo un error al generar el PDF");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #status {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Descargar Documento</h2>
+        
+        <label for="pdf-name">Nombre del PDF:</label>
+        <input type="text" id="pdf-name" class="input-field" placeholder="Ingrese el nombre del archivo">
+
+        <button id="download-btn">Descargar PDF</button>
+
+        <div id="status"></div>
+
+        <h3>Enviar por correo</h3>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" class="input-field" placeholder="Ingrese su correo">
+
+        <button id="send-email-btn">Enviar PDF por Correo</button>
+    </div>
+
+    <script>
+        document.getElementById("download-btn").addEventListener("click", function () {
+            const pdfName = document.getElementById("pdf-name").value;
+    
+            if (!pdfName) {
+                alert("Por favor, ingrese el nombre del PDF.");
+                return;
+            }
+    
+            fetch(`/download-pdf?name=${pdfName}`)
+                .then((response) => {
+                    if (response.ok) {
+                        window.location.href = `/download-pdf?name=${pdfName}`;
+                        document.getElementById("status").textContent = "Descarga exitosa. Redirigiendo...";
+                        setTimeout(() => {
+                            window.location.href = "index.html"; // Redirige a la página principal después de 3 segundos
+                        }, 3000);
+                    } else {
+                        document.getElementById("status").textContent = "No se pudo encontrar el archivo.";
+                    }
+                })
+                .catch((error) => {
+                    document.getElementById("status").textContent = "Error al intentar descargar el archivo.";
+                    console.error("Error al descargar el archivo:", error);
+                });
+        });
+    
+        document.getElementById("send-email-btn").addEventListener("click", function () {
+            const email = document.getElementById("email").value;
+            const pdfName = document.getElementById("pdf-name").value;
+    
+            if (!email) {
+                alert("Por favor, ingrese su correo electrónico.");
+                return;
+            }
+    
+            fetch("/send-pdf-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    pdfName: pdfName
+                })
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    document.getElementById("status").textContent = "El PDF se ha enviado correctamente. Redirigiendo...";
+                    setTimeout(() => {
+                        window.location.href = "index.html"; // Redirige a la página principal después de 3 segundos
+                    }, 3000);
+                } else {
+                    alert("Hubo un problema al enviar el correo.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error al enviar el correo:", error);
+                alert("Error al intentar enviar el correo.");
+            });
+        });
+    </script>
+
+    
+</body>
+</html>

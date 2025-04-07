@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagar con Stripe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+            margin: 0;
+        }
+
+        .payment-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2, h3 {
+            color: #333;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #btn-stripe {
+            background-color: #5469d4;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #card-element {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        #card-errors {
+            color: red;
+            margin-top: 10px;
+        }
+
+        #submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Pagar</h2>
+        
+        <div class="payment-methods">
+            <button id="btn-stripe" class="btn">Pagar con Stripe</button>
+        </div>
+
+        <!-- Sección de pago con Stripe -->
+        <div id="stripe-container" class="hidden">
+            <h3>Pagar con Tarjeta (Stripe)</h3>
+            <form id="payment-form">
+                <div id="card-element"></div>
+                <div id="card-errors" role="alert"></div>
+                <button id="submit">Pagar con Stripe</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Stripe SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        const stripe = Stripe("");
+        const elements = stripe.elements();
+        const cardElement = elements.create("card", {
+            hidePostalCode: true // Esto oculta el campo de código postal
+        });
+        cardElement.mount("#card-element");
+
+        document.getElementById("btn-stripe").addEventListener("click", () => {
+            document.getElementById("stripe-container").classList.remove("hidden");
+        });
+
+        document.getElementById("payment-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            try {
+                const response = await fetch("http://localhost:3000/create-payment-intent", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: 5000, currency: "usd" })
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error);
+
+                const { error } = await stripe.confirmCardPayment(data.clientSecret, {
+                    payment_method: { card: cardElement }
+                });
+
+                if (error) {
+                    console.error("Error en el pago:", error);
+                    alert("Error en el pago: " + error.message);
+                } else {
+                    alert("Pago exitoso 🎉");
+
+                    // Redirige a la página de descarga del documento
+                    window.location.href = "descargar.html";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    </script>
+        <script>
+            // Bloqueo de la navegación hacia atrás usando las flechas del navegador
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, null, window.location.href);
+            };
+    
+            // Bloqueo de teclas de retroceso y flechas del teclado
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Backspace' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    event.preventDefault(); // Evita que la tecla haga su acción por defecto
+                }
+            });
+    
+            // Confirmación al intentar salir de la página
+            window.onbeforeunload = function () {
+                return "¿Estás seguro de que deseas salir de esta página?";
+            };
+        </script>
+</body>
+</html>

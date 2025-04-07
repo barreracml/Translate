@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Acta de Nacimiento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #00b3e3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0099b3;
+        }
+
+        .form-group-small {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group-small input {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Formulario para Generar Acta de Nacimiento</h2>
+        <form id="pdfForm">
+            <div class="form-group">
+                <label for="nombreApellido">Nombre y Apellido:</label>
+                <input type="text" id="nombreApellido" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fechaNacimiento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select id="sexo">
+                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="lugarNacimiento">Lugar de Nacimiento:</label>
+                <input type="text" id="lugarNacimiento" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaRegistro">Fecha de Registro:</label>
+                <input type="date" id="fechaRegistro" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombrePadre">Nombre del Padre:</label>
+                <input type="text" id="nombrePadre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nombreMadre">Nombre de la Madre:</label>
+                <input type="text" id="nombreMadre" required>
+            </div>
+
+            <div class="form-group-small">
+                <div class="form-group">
+                    <label for="numeroDocumento">Número de Documento:</label>
+                    <input type="text" id="numeroDocumento" required>
+                </div>
+                <div class="form-group">
+                    <label for="volumen">Volumen:</label>
+                    <input type="text" id="volumen" required>
+                </div>
+            </div>
+
+            <div class="form-group-small">
+                <div class="form-group">
+                    <label for="numeroActa">Número de Acta:</label>
+                    <input type="text" id="numeroActa" required>
+                </div>
+                <div class="form-group">
+                    <label for="numeroPagina">Número de Página:</label>
+                    <input type="text" id="numeroPagina" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaEmision">Fecha de Emisión:</label>
+                <input type="date" id="fechaEmision" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lugarEmision">Lugar de Emisión:</label>
+                <input type="text" id="lugarEmision" required>
+            </div>
+
+            <button type="submit">Generar PDF</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("pdfForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const datos = {
+                nombreApellido: document.getElementById("nombreApellido").value,
+                fechaNacimiento: document.getElementById("fechaNacimiento").value,
+                sexo: document.getElementById("sexo").value,
+                lugarNacimiento: document.getElementById("lugarNacimiento").value,
+                fechaRegistro: document.getElementById("fechaRegistro").value,
+                nombrePadre: document.getElementById("nombrePadre").value,
+                nombreMadre: document.getElementById("nombreMadre").value,
+                numeroDocumento: document.getElementById("numeroDocumento").value,
+                volumen: document.getElementById("volumen").value,
+                numeroActa: document.getElementById("numeroActa").value,
+                numeroPagina: document.getElementById("numeroPagina").value,
+                fechaEmision: document.getElementById("fechaEmision").value,
+                lugarEmision: document.getElementById("lugarEmision").value
+            };
+
+            const response = await fetch("http://localhost:3000/generar-pdf", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert("PDF generado con éxito");
+                window.location.href = `http://localhost:3000/${result.fileName}`;
+            } else {
+                alert("Hubo un error al generar el PDF");
+            }
+        });
+    </script>
+
+</body>
+</html>

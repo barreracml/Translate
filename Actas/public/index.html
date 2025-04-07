@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Traducción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Solicitud para Pago de Traducción de Actas</h2>
+    <form id="solicitudForm">
+        <label>Nombre:</label>
+        <input type="text" id="nombre" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <label>Dirección:</label>
+        <input type="text" id="direccion" required>
+
+        <label>Teléfono:</label>
+        <input type="text" id="telefono" required>
+
+        <label>Tipo de Documento:</label>
+        <select id="tipoDocumento">
+            <option value="Nacimiento">Acta de Nacimiento</option>
+            <option value="Matrimonio">Acta de Matrimonio</option>
+            <option value="Defuncion">Acta de Defunción</option>
+        </select>
+
+        <button type="submit">Enviar Solicitud</button>
+    </form>
+
+    <script>
+        document.getElementById("solicitudForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const solicitud = {
+                nombre: document.getElementById("nombre").value,
+                email: document.getElementById("email").value,
+                direccion: document.getElementById("direccion").value,
+                telefono: document.getElementById("telefono").value,
+                tipoDocumento: document.getElementById("tipoDocumento").value,
+            };
+
+            try {
+                // Enviar solicitud al servidor
+                const response = await fetch("http://localhost:3000/solicitud", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(solicitud)
+                });
+
+                const result = await response.json();
+                console.log(result);  // Agregar un console log para depurar la respuesta del servidor
+
+                if (result.success) {
+                    alert(result.message);
+
+                    // Redirigir según el tipo de documento seleccionado
+                    switch (solicitud.tipoDocumento) {
+                        case "Nacimiento":
+                            window.location.href = "/acta-nacimiento.html"; 
+                            break;
+                        case "Matrimonio":
+                            window.location.href = "/acta-matrimonio.html"; 
+                            break;
+                        case "Defuncion":
+                            window.location.href = "/acta-defuncion.html";
+                            break;
+                        default:
+                            window.location.href = "/datos.html";  
+                            break;
+                    }
+                } else {
+                    alert("Hubo un error al enviar la solicitud.");
+                }
+            } catch (error) {
+                console.error("Error al enviar la solicitud:", error);
+                alert("Hubo un error con la conexión al servidor.");
+            }
+        });
+
+    </script>
+    
+</body>
+
+</html>

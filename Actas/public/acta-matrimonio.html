@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decreto de Divorcio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #00b3e3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0099b3;
+        }
+
+        .form-group-small {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group-small input {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Decreto de Divorcio</h2>
+        <form id="divorcioForm">
+            <div class="form-group">
+                <label for="nombreDocumento">Nombre del Documento:</label>
+                <input type="text" id="nombreDocumento" placeholder="Acta_Divorcio_Juan_Perez" required>
+            </div>
+            <!-- Información del Primer Involucrado -->
+            <div class="form-group">
+                <label for="nombreInvolucrado1">Nombre del Primer Involucrado:</label>
+                <input type="text" id="nombreInvolucrado1" required>
+            </div>
+
+            <div class="form-group-small">
+                <div>
+                    <label for="edadInvolucrado1">Edad:</label>
+                    <input type="number" id="edadInvolucrado1"  required>
+                </div>
+                <div>
+                    <label for="sexoInvolucrado1">Sexo:</label>
+                    <select id="sexoInvolucrado1" required>
+                        <option value="">Seleccione sexo</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nacionalidadInvolucrado1">Nacionalidad:</label>
+                <input type="text" id="nacionalidadInvolucrado1" required>
+            </div>
+
+            <!-- Información del Segundo Involucrado -->
+            <div class="form-group">
+                <label for="nombreInvolucrado2">Nombre del Segundo Involucrado:</label>
+                <input type="text" id="nombreInvolucrado2" required>
+            </div>
+
+            <div class="form-group-small">
+                <div>
+                    <label for="edadInvolucrado2">Edad:</label>
+                    <input type="number" id="edadInvolucrado2" required>
+                </div>
+                <div>
+                    <label for="sexoInvolucrado2">Sexo:</label>
+                    <select id="sexoInvolucrado2" required>
+                        <option value="">Seleccione sexo</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nacionalidadInvolucrado2">Nacionalidad:</label>
+                <input type="text" id="nacionalidadInvolucrado2" required>
+            </div>
+
+            <!-- Detalles del Decreto -->
+            <div class="form-group">
+                <label for="fechaDisolucion">Fecha de Disolución del Decreto:</label>
+                <input type="date" id="fechaDisolucion" required>
+            </div>
+
+            <div class="form-group-small">
+                <div>
+                    <label for="numeroDocumento">Número de Documento:</label>
+                    <input type="text" id="numeroDocumento" required>
+                </div>
+                <div>
+                    <label for="volumen">Volumen:</label>
+                    <input type="text" id="volumen" required>
+                </div>
+            </div>
+
+            <div class="form-group-small">
+                <div>
+                    <label for="numeroActa">Número de Acta:</label>
+                    <input type="text" id="numeroActa" required>
+                </div>
+                <div>
+                    <label for="numeroPagina">Número de Página:</label>
+                    <input type="text" id="numeroPagina" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaEmision">Fecha de Emisión:</label>
+                <input type="date" id="fechaEmision" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lugarEmision">Lugar de Emisión:</label>
+                <input type="text" id="lugarEmision" required>
+            </div>
+
+            <button type="submit">Generar PDF</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("divorcioForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const datos = {
+                nombreDocumento: document.getElementById("nombreDocumento").value,
+                nombreInvolucrado1: document.getElementById("nombreInvolucrado1").value,
+                edadInvolucrado1: document.getElementById("edadInvolucrado1").value,
+                sexoInvolucrado1: document.getElementById("sexoInvolucrado1").value,
+                nacionalidadInvolucrado1: document.getElementById("nacionalidadInvolucrado1").value,
+                nombreInvolucrado2: document.getElementById("nombreInvolucrado2").value,
+                edadInvolucrado2: document.getElementById("edadInvolucrado2").value,
+                sexoInvolucrado2: document.getElementById("sexoInvolucrado2").value,
+                nacionalidadInvolucrado2: document.getElementById("nacionalidadInvolucrado2").value,
+                fechaDisolucion: document.getElementById("fechaDisolucion").value,
+                numeroDocumento: document.getElementById("numeroDocumento").value,
+                volumen: document.getElementById("volumen").value,
+                numeroActa: document.getElementById("numeroActa").value,
+                numeroPagina: document.getElementById("numeroPagina").value,
+                fechaEmision: document.getElementById("fechaEmision").value,
+                lugarEmision: document.getElementById("lugarEmision").value,
+            };
+
+            const response = await fetch("http://localhost:3000/generardivorcio", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const result = await response.json();
+
+            // Verifica el contenido de la respuesta
+            console.log(result); // Ver qué estás recibiendo
+
+            if (result.success) {
+                alert("PDF generado con éxito");
+
+                // Esperar 2 segundos antes de redirigir
+                setTimeout(function () {
+                    window.location.href = './payment.html'; // Redirige a la página de pago
+                }, 1000);
+            } else {
+                alert(result.message || "Hubo un error al generar el PDF");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
